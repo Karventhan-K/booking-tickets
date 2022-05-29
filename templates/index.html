@@ -1,0 +1,163 @@
+{% load static %}
+<html>
+ <head>
+      <title>Online Railway Ticket Booking</title>
+      <style>
+           body{
+                font-family: "comic sans ms", sans serif;
+                background-color: lightgreen;
+                margin: 0;
+           }
+           h2{
+                background-color: forestgreen;
+                color: white;
+                padding: 10px;
+                text-align: center;
+           }
+           td{
+                padding: 7px;
+           }
+           input{
+                height: 30px;
+                border-radius: 10px;
+                border: none;
+           }
+           input:focus{
+                outline: none;
+                border: 1px solid forestgreen;
+           }
+           input:hover{
+                box-shadow: 5px 5px 5px black;
+           }
+           .button{
+                background-color: forestgreen;
+                color:#fff;
+                border: none;
+                padding: 7px
+           }
+           .button:hover {
+                cursor: pointer;
+                box-shadow: 5px 5px 5px red;
+           }
+      </style>
+ </head>
+ <body>
+      <h1 align="center">Online Railway Ticket Booking</h1>
+      <form method="post" name="myform" onsubmit="return validate_booking();">
+          {% csrf_token %}
+           <div id="personal-details">
+           <h2 align="center">Fill the Details</h2>
+                <table width="100%">
+                     <tr>
+                          <td>First Name</td>
+                          <td>
+                               <input type="text" placeholder="First Name" name="first_name" id='first_name' size="25" >
+                          </td>
+                          <td>Last Name</td>
+                          <td>
+                               <input type="text" size="25" placeholder="First Name" name="lastname" id="lastname" >
+                          </td>
+                     </tr>
+                     <tr>
+                          <td>Father's Name</td>
+                          <td>
+                               <input type="text" placeholder="Father's Name" name="fathername" id="fathername" size="25">
+                          </td>
+                          <td>Gender</td>
+                          <td style="width: 12%;">
+                               <input type="radio" name="gender_m_or_f" value="male" >Male
+                          </td>
+                          <td>
+                               <input type="radio" name="gender_m_or_f" value="female">Female
+                          </td>
+                     </tr>
+                     <tr>
+                          <td>Mobile Number</td>
+                          <td>
+                               <input type="text" name="mobilenumber" placeholder="9831****" id="mobilenumber" size="25">
+                          </td>
+                          <td>Email Id</td>
+                          <td>
+                               <input type="text" name="email" placeholder="your id@gmail.com" size="25" id="email">
+                          </td>
+                     </tr>
+                     <tr>
+                          <td>Starting station</td>
+                          <td>
+                              <select name="starting_point" style="width: 200px">
+                                    <option>Coimboture</option>
+                                    <option>Dharapuram</option>
+                              </select>
+                          </td>
+                         <td>End station</td>
+                          <td>
+                              <select name="end_point" style="width: 200px">
+                                    <option>Pollachi</option>
+                                    <option>Tiruppur</option>
+                              </select>
+
+                          </td>
+                     </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                          <td style="width: 12%;">
+                               <input type="Submit" value="Submit" class="button">
+                          </td>
+                     </tr>
+                </table>
+           </div>
+      </form>
+ </body>
+ {% if alert_flag %}
+     <script>alert("This ticket was already filed")</script>
+ {% endif %}
+  {% if saved_flag %}
+     <script>alert("Your ticket was booked")</script>
+ {% endif %}
+ <script>
+function validate_booking() {
+
+    var first_name = document.getElementById("first_name");
+    if (first_name.value.length <= 0) {
+        alert("please fill the first name")
+        first_name.focus();
+        return false;
+    }
+    var lastname = document.getElementById("lastname");
+    if (lastname.value.length <= 0) {
+        alert("please fill the last name")
+        lastname.focus();
+        return false;
+    }
+    var fathername = document.getElementById("fathername");
+    if (fathername.value.length <= 0) {
+        alert("please fill the father name")
+        fathername.focus();
+        return false;
+    }
+    chosen = "";
+    len = document.myform.gender_m_or_f.length;
+    for (var i = 0; i <len; i++) {
+        if (document.myform.gender_m_or_f[i].checked) {
+            chosen = document.myform.gender_m_or_f[i].value
+        }
+    }
+    if (chosen == "") {
+        alert("Please choose your Gender");
+        return false;
+    }
+    var mobilenumber = document.getElementById("mobilenumber");
+    if (mobilenumber.value.length <= 0) {
+        alert("please fill the Mobile Number")
+        mobilenumber.focus();
+        return false;
+    }
+    var email = document.getElementById("email");
+    if (email.value.length <= 0) {
+        alert("please fill the email")
+        email.focus();
+        return false;
+    }
+ }
+</script>
+</html>
